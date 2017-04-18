@@ -1,0 +1,21 @@
+<div class="container">
+		<p id="notice"><%= notice %></p>
+		<div class="span4">
+				<div class="thumbnail">
+						<div class="caption">
+												</div>
+						<%= image_tag(@song.url) %>
+				</div>
+		</div>
+		<p>
+		<%= @song.track %>
+		</p>
+		<p>
+		<%= @song.album %>
+		</p>
+		<p>
+		<%= @song.artists %>
+		</p>
+		<h1><%= link_to 'Edit', edit_song_path(@song), class: "label label-danger" %></h1>
+		<h1><%= link_to 'Back',songs_path, class:"btn btn-success" %></h1>
+</div>

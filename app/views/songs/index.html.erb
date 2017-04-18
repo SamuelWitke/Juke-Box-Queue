@@ -1,0 +1,106 @@
+<div class="container">
+		<div class="content">
+				<div class="player">
+						<div class="player-info">
+								<div class="player-info-text">
+										<% if @current != nil %>
+										<h2 class="player-song-name"><%#= @current['track']['name'] %></h2>
+										<h3 class="player-artist"><%#= @current.artist %></h3>
+										<% end %>
+								</div>
+								<div class="player-cover">
+										<% if @current != nil %>
+											<%#= image_tag(@current.url) %>	
+										<% end %>
+								</div>
+						</div>
+						<div class="player-spectrum">
+								<div class="player-spectrum-bars">
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+										<div class="player-spectrum-bar"></div>
+								</div>
+								<div class="player-spectrum-floor"></div>
+						</div>
+						<div class="player-drops"></div>
+						<div class="player-controls">
+								<div class="player-buttons">
+										<button class="player-button">
+												<i class="fa fa-step-backward"></i> 
+										</button>
+										<button class="player-button play-pause-button">
+												<i class="fa fa-pause"></i> 
+										</button>
+										<button class="player-button">
+												<i class="fa fa-step-forward"></i> 
+										</button>
+								</div>
+								<div class="player-slider"></div>
+						</div>
+				</div>
+				<p class="info">Based on the Dribbble shot <a href="https://dribbble.com/shots/1857356-Juicy-Player">Juicy Player</a> by Valentyn Khenkin</p>
+		</div>
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="800">
+				<defs>
+				<filter id="goo">
+				<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+				<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+				<feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+				</filter>
+				<filter id="goo-no-comp">
+				<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+				<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" result="goo" />
+				</filter>
+				<filter id="goo-drops">
+				<feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+				<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+				</filter>
+				</defs>
+		</svg>
+</div><!-- /container -->
+<script>
+console.log("Loaded");
+$(".play-pause-button").click(function(){
+		console.log("clicked");
+		window.play();
+});
+</script>
+<% @songs.each do |song| %>
+		<div class="song row clearfix">
+				<h2>
+						<%= song.track %><br>
+						<%= song.artists %><br>
+						<%= image_tag(song.url) %><br>
+						<small class="author">Submitted <%= time_ago_in_words(song.created_at) %> by <%= song.user.username %></small>
+				</h2>
+				<div class="btn-group">
+						<%= link_to like_song_path(song), method: :put, class: "btn btn-default btn-lg" do %>
+								<span class="glyphicon glyphicon-chevron-up"></span> Upvote
+								<%= song.get_upvotes.size %>
+						<% end %>
+						<%= link_to dislike_song_path(song), method: :put, class: "btn btn-default btn-lg" do %>
+								<span class="glyphicon glyphicon-chevron-down"> Downvote
+										<%= song.get_downvotes.size %>
+								<% end %>
+								<%= link_to "Show",song, class: "btn btn-default btn-lg" %>
+								<% if song.user == current_user %>
+										<%= link_to 'Destroy', song, method: :delete, data: { confirm:'Are you sure?' } , class: "btn btn-default btn-lg"%>
+								<% end %>
+
+				</div>
+		</div>
+<% end %>
+</div>
