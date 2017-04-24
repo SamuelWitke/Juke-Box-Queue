@@ -6,6 +6,11 @@ class SongsController < ApplicationController
   # GET /songs.json
   def index
     @songs = Song.order(:cached_votes_up  => :desc)
+	if(Delayed::Job.last) # Handle song visualizer
+		id = Delayed::Job.last.id
+		@current = Song.where(job_id: id).first
+		puts @current.track
+	end
   end
 
   # GET /songs/1

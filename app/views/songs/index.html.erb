@@ -4,13 +4,13 @@
 						<div class="player-info">
 								<div class="player-info-text">
 										<% if @current != nil %>
-										<h2 class="player-song-name"><%#= @current['track']['name'] %></h2>
-										<h3 class="player-artist"><%#= @current.artist %></h3>
+										<h2 class="player-song-name"><%= @current.track %></h2>
+										<h3 class="player-artist"><%= @current.artists %></h3>
 										<% end %>
 								</div>
 								<div class="player-cover">
 										<% if @current != nil %>
-											<%#= image_tag(@current.url) %>	
+											<%= image_tag(@current.url) %>	
 										<% end %>
 								</div>
 						</div>
