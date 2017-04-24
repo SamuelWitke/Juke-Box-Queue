@@ -1,29 +1,23 @@
-<<<<<<< HEAD
-# README
+# A Router Based Vote to play next song.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+What to do on linx
 
-Things you may want to cover:
+* Open Spotify App download here https://www.spotify.com/us/download/linux/
 
-* Ruby version
+* Open new terminal session in same directory and run 	rake jobs:work
 
-* System dependencies
+* Run rails s 
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
 =======
 # Juke-Box-Queue
-A Spotify Api rails application allowing users to vote songs and play the highest rated one 
+How it works 
+
+* Gem Typhoeus to make requests to https://open.spotify.com  link to repo https://github.com/typhoeus/typhoeus
+
+* Gem delayed_job to handle playing songs in separate thread link to repo https://github.com/collectiveidea/delayed_job
+
+* Gem rspotify as a ruby wrapper to the Spotify API link to repo https://github.com/guilhermesad/rspotify 
+* Check out lib/SpotifyClient and lib/Player for full details 
 >>>>>>> e8a581b8e27cba05b9c3cc04510dfc36478b1139
+=======
+
