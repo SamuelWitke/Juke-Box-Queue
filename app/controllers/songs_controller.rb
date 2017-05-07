@@ -1,16 +1,23 @@
 class SongsController < ApplicationController
+# Render mobile or desktop depending on User-Agent for these actions.
+  before_action :check_for_mobile, :only => [:show, :index, :new, :edit]
+
+  # Always render mobile versions for these, regardless of User-Agent.
+#  before_action :prepare_for_mobile, only: [:show, :index]
+
   before_action :set_song, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
 
   # GET /songs
   # GET /songs.json
   def index
-    @songs = Song.order(:cached_votes_up  => :desc)
-	if(Delayed::Job.last) # Handle song visualizer
-		id = Delayed::Job.last.id
-		@current = Song.where(job_id: id).first
-		puts @current.track
+	@songs = [] 
+	unless Delayed::Job::first.nil?
+   	@songs = Song.where.not(job_id: Delayed::Job.first.id).order(:cached_votes_up  => :desc)
+	@current = Song.where(job_id: Delayed::Job.first.id).first
+	puts @current.inspect
 	end
+	
   end
 
   # GET /songs/1
@@ -53,13 +60,12 @@ class SongsController < ApplicationController
   # POST /songs
   # POST /songs.json
   def create
-	job=Delayed::Job.enqueue(Schedule::Player.new)
-	params[:song][:job_id]=job.id
-    @song = current_user.songs.build(song_params)
-    respond_to do |format|
+		job=Delayed::Job.enqueue(Schedule::Player.new) #allows delayed_jobs gem to run the background queue of playing songs
+		params[:song][:job_id]=job.id
+    	@song = current_user.songs.build(song_params)
+	respond_to do |format|
       if @song.save
-  		#allows delayed_jobs gem to run the background queue of playing songs
-        format.html { redirect_to @song, notice: 'Song was successfully created.'+@song.job_id.inspect }
+  	    format.html { redirect_to @song, notice: 'Song was successfully created.'+@song.job_id.inspect }
         format.json { render :show, status: :created, location: @song }
       else
         format.html { render :new }

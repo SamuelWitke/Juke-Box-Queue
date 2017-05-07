@@ -15,5 +15,6 @@ SimpleConfig.for :application do
   # you risk checking in a file that will override values in production
   load File.join(Rails.root.to_s, "config", "settings", "local.rb"),         :if_exists? => true
 
-    set :my_variable, 'hello world'
+  set :my_variable, 'hello world'
+  #load :current_track, 'something'
 end

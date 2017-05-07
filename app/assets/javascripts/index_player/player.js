@@ -4,7 +4,7 @@ $(document).ready(function(){
 		,$drops=$(".player-drops")
 		,$spectrum=$(".player-spectrum")
 
-		,paused=false
+		,paused=true
 
 		,barWidth=$bars.width()
 		,barHeight=$bars.height()
