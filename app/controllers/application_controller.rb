@@ -1,7 +1,10 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
+
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
+  helper_method :mobile_device?
+
   protected
   def check_for_mobile
     session[:mobile_override] = params[:mobile] if params[:mobile]
@@ -27,5 +30,4 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
  end
 
-  helper_method :mobile_device?
 end
