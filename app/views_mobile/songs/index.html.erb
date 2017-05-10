@@ -1,5 +1,9 @@
+<style>
+.nav a{
+font-size: 21px !important;
+    }
+</style>
 <center>
-<h2> MObile </h2>
 <% unless @current.nil? %>
 		<div class="player">
 				<div class="player-info">
@@ -70,12 +74,11 @@
 								<%= song.get_upvotes.size %>
 						<% end %>
 						<%= link_to dislike_song_path(song), method: :put, class: "btn btn-default btn-xlg" do %>
-								<span class="glyphicon glyphicon-chevron-down"> Downvote
+								<span class="glyphicon glyphicon-chevron-down"> Down
 										<%= song.get_downvotes.size %>
 								<% end %>
-								<%= link_to "Show",song, class: "btn btn-default btn-xlg" %>
 								<% if song.user == current_user %>
-										<%= link_to 'Destroy', song, method: :delete, data: { confirm:'Are you sure?' } , class: "btn btn-default btn-lg"%>
+										<%= link_to 'Destroy', song, method: :delete, data: { confirm:'Are you sure?' } , class: "btn btn-default btn-xlg"%>
 								<% end %>
 
 				</div>
