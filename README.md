@@ -10,8 +10,7 @@ What to do on Linx/Mac
 
 * Open a new terminal and Run rails s -b IP -p 3000
 
-=======
-# Juke-Box-Queue
+
 ## How it works 
 
 * Gem Typhoeus to make requests to https://open.spotify.com  link to repo https://github.com/typhoeus/typhoeus
@@ -20,5 +19,5 @@ What to do on Linx/Mac
 
 * Gem rspotify as a ruby wrapper to the Spotify API link to repo https://github.com/guilhermesad/rspotify 
 * Check out lib/SpotifyClient and lib/Player for full details 
-=======
+
 
