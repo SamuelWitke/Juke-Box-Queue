@@ -1,3 +1,5 @@
+
+<%= javascript_include_tag "search/modernizr.custom.js" ,"data-turbolinks-track" => true %>
 <h1> Search</h1>
 <%= form_tag(search_path, :method => "get", id: "search-form") do %>
 		<div class="input-group">
@@ -8,51 +10,51 @@
 				</span>
 		</div>
 <% end %>
-<div class="container-fluid" align ='center'>
-		<div class ="row" >
-				<div class="row spacer">
-						<div class="span4">&nbsp</div>
-						<div class="span4">&nbsp</div>
-						<div class="span4">&nbsp</div>
-				</div>
-				<%case @search_opt %>
-				<%when 'Artist'%>
-						<% if @search_res.first != nil %>
-								<% @search_res.each do |res| %>
-										<h1> <%= res.name %> </h1>
-										<% res.top_tracks(:US).each do |track| %>
-												<div class="col col-lg-6 col-md-6 col-sm-6" >
-													<div class= "artist_img" style="margin: 8px 8px 8px 8px;">
-														<%= link_to image_tag(track.album.images.first["url"], size: "350", padding: '5px'),new_song_path(:track => track.name, :album => track.album.name, :artists => @search_res.first.name, :uri => track.uri) %> 
-													</div>
-														<h3> <%= track.name%> </h3>
-												</div>
-										<% end %>
-										<div class="row top7"></div>
-								<% end %>
-						<% end %>
-				<%when 'Album'%>
-						<% if @search_res != nil %>
-								<% @search_res.each do |res| %>
-										<h1> <%= res.name %> </h1>
-										<% res.tracks.each do |track| %>
-										<div class="col col-lg-6 col-md-5 col-sm-5">
-														<%= link_to image_tag(track.album.images.first["url"], size: "350" , padding: '5px'),new_song_path(:track => track.name, :album => track.album.name, :artists => @search_res.first.name, :uri => track.uri) %> 
-														<h3> <%= track.name%> </h3>
-												</div>
-										<% end %>
-										<div class="row top7"></div>
-								<% end %>
-						<% end %>
-				<%when 'Track'%>
-						<% if @search_res != nil %>
-								<% @search_res.each do |track| %>
-										<div class="col col-lg-6 col-md-5 col-sm-5">
-												<%= link_to image_tag(track.album.images.first["url"], size: "300" ),new_song_path(:track => track.name, :album => track.album.name, :artists => @search_res.first.name, :uri => track.uri, :url => track.album.images.first["url"]) %> 
-												<h2><%= track.name%></h2>
-										</div>
-							<% end %>
+<ul class="grid effect-8" id="grid">
+		<%case @search_opt %>
+		<%when 'Artist'%>
+				<% @search_res.each do |res| %>
+						<li>
+								<h1> <%= res.name %> </h1>
+						</li>
+						<% res.top_tracks(:US).each do |track| %>
+								<li>
+										<%= link_to image_tag(track.album.images.first["url"], size: "350" ),new_song_path(:track => track.name, :album => track.album.name, :artists => @search_res.first.name, :uri => track.uri) %> 
+										<h3> <%= track.name%> </h3>
+								</li>
 						<% end %>
 				<% end %>
-		</div>
-</div>
+		<%when 'Album'%>
+				<% @search_res.each do |res| %>
+						<li>
+								<h1> <%= res.name %> </h1>
+						</li>
+						<% res.tracks.each do |track| %>
+								<li>
+										<%= link_to image_tag(track.album.images.first["url"], size: "350" ),new_song_path(:track => track.name, :album => track.album.name, :artists => @search_res.first.name, :uri => track.uri) %> 
+										<h3> <%= track.name%> </h3>
+								</li>
+						<% end %>
+				<% end %>
+		<%when 'Track'%>
+				<% @search_res.each do |track| %>
+						<li>
+								<%= link_to image_tag(track.album.images.first["url"], size: "400" ),new_song_path(:track => track.name, :album => track.album.name, :artists => @search_res.first.name, :uri => track.uri, :url => track.album.images.first["url"]) %> 
+								<h2><%= track.name%></h2> 
+						</li>
+				<% end %>
+		<% end %>
+</ul>
+<p class="info">Based on the <a href="https://tympanus.net/Development/GridLoadingEffects/">Loading Effects for Grid Items</a> by Erika Mackley</p>
+<%= javascript_include_tag "search/masonry.pkgd.min.js" ,"data-turbolinks-track" => true %>
+<%= javascript_include_tag "search/imagesloaded.js" ,"data-turbolinks-track" => true %>
+<%= javascript_include_tag "search/classie.js" ,"data-turbolinks-track" => true %>
+<%= javascript_include_tag "search/AnimOnScroll.js" ,"data-turbolinks-track" => true %>
+<script>
+console.log("Loaded text/java");
+new AnimOnScroll( document.getElementById( 'grid' ), {
+		minDuration : 0.4,
+		maxDuration : 0.6,
+		viewportFactor : 0.2
+} );
+</script>

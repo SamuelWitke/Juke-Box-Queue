@@ -18,9 +18,9 @@ module VoteSongQueue
 	config.before_initialize do
         config.client = SpotifyClient::Client.new
 		puts "Enter Client ID Created @ https://developer.spotify.com/"
-		client_id = gets
+		client_id = STDIN.gets
 		puts"Enter Client Secret"
-		client_secret= gets
+		client_secret= STDIN.gets
 		RSpotify.authenticate(client_id.chomp,client_secret.chomp)
    end
   end
