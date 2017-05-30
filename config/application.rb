@@ -16,8 +16,8 @@ module VoteSongQueue
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 	config.before_initialize do
-       config.client = SpotifyClient::Client.new
-		puts "Enter Client ID"
+        config.client = SpotifyClient::Client.new
+		puts "Enter Client ID Created @ https://developer.spotify.com/"
 		client_id = gets
 		puts"Enter Client Secret"
 		client_secret= gets
