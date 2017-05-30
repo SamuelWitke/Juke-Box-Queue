@@ -1,6 +1,6 @@
 class SongsController < ApplicationController
   # Render mobile or desktop depending on User-Agent for these actions.
-  before_action :check_for_mobile, :only => [:show, :index, :new, :edit]
+  before_action :check_for_mobile, :only => [:show, :index, :new, :edit, :search]
   # Always render mobile versions for these, regardless of User-Agent.
   # before_action :prepare_for_mobile, only: [:show, :index]
   before_action :set_song, only: [:show, :edit, :update, :destroy]
@@ -10,11 +10,8 @@ class SongsController < ApplicationController
   # GET /songs.json
   def index
 	@songs = []
-	if(Rails.application.config.client.status['playing'])
-		track =  Rails.application.config.client.status['track']['track_resource']['name']
-		@current = Song.find_by_track(track)
-		@songs = Song.where.not(id: @current.id).order(:cached_votes_up  => :desc) 
-	end
+	@current = get_current
+	@songs = Song.where.not(id: @current[:id]).order(:cached_votes_up  => :desc)  unless @current.nil?
   end
 
   # GET /songs/1
@@ -24,7 +21,12 @@ class SongsController < ApplicationController
 
   # GET /songs/new
   def new
-    @song = current_user.songs.build(:track => params[:track], :album => params[:album], :artists => params[:artists], :uri => params[:uri], :url => params[:url])
+    @song = current_user.songs.build(
+			:track => params[:track], 
+			:album => params[:album], 
+			:artists => params[:artists], 
+			:uri => params[:uri], 
+			:url => params[:url])
   end
 
   # GET /songs/1/edit
@@ -40,33 +42,36 @@ class SongsController < ApplicationController
             @search_res = RSpotify::Album.search(@search)
     		@search_res = @search_res.first(3) # Returns the first 3 similar albums 
         when 'Track'
-            @search_res = RSpotify::Track.search(@search)
-    		@search_res = @search_res.first(15) # Returns the first 15 similar track
-    end
+            @search_res = RSpotify::Track.search(@search) 
+    		@search_res = @search_res.first(30) # Returns the first 15 similar track
+    	end
+		flash[:error]= 'Item Not Found' if !@search_res.any?
+		
   end
 
   def search
 	if params[:search].present? 
 		@search = params[:search]
 		@search_opt = params[:search_opt]
-		find
-		flash[:error] = "Please give us something to search for!" if !@search_res.present?
+		find if @search != nil
+	else
+		flash[:error] = "Please give us something to search for!" 
 	end
   end
 
   # POST /songs
   # POST /songs.json
   def create
-		job=Delayed::Job.enqueue(Schedule::Player.new) #allows delayed_jobs gem to run the background queue of playing songs
-		params[:song][:job_id]=job.id
-    	@song = current_user.songs.build(song_params)
+	job=Delayed::Job.enqueue(Schedule::Player.new) #allows delayed_jobs gem to run the background queue of playing songs
+	params[:song][:job_id]=job.id
+    @song = current_user.songs.build(song_params)
 	respond_to do |format|
-      if @song.save
-  	    format.html { redirect_to @song, notice: 'Song was successfully created.'+@song.job_id.inspect }
-        format.json { render :show, status: :created, location: @song }
-      else
-        format.html { render :new }
-        format.json { render json: @song.errors, status: :unprocessable_entity }
+    if @song.save
+  	   format.html { redirect_to @song, notice: 'Song was successfully created.'+@song.job_id.inspect }
+       format.json { render :show, status: :created, location: @song }
+    else
+       format.html { render :new }
+       format.json { render json: @song.errors, status: :unprocessable_entity }
       end
     end
   end

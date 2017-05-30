@@ -1,11 +1,5 @@
-<p id="notice"><%= notice %></p>
-<div class="span4">
-		<div class="thumbnail">
-				<div class="caption">
-				</div>
-				<%= image_tag(@song.url) %>
-		</div>
-</div>
+<center>
+<%= image_tag(@song.url) %>
 <div class= 'lead'>
 <p class='text-center'>
 <%= @song.track %>
@@ -17,5 +11,6 @@
 <%= @song.artists %>
 </p>
 </div>
-<h1 class ='text-center'><%= link_to 'Edit', edit_song_path(@song), class: "label label-danger" %></h1>
-<h1 class = 'text-center'><%= link_to 'Home',root_path, class:"btn btn-success" %></h1>
+<h1 class ='text-center'><%= link_to 'Edit', edit_song_path(@song), class: "btn btn-danger btn-lg" %></h1>
+<h1 class = 'text-center'><%= link_to 'Home',root_path, class:"btn btn-success btn-lg" %></h1>
+</center>

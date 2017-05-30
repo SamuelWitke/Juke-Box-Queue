@@ -1,3 +1,5 @@
+<div class = 'new'>
+<center>
 <%= form_for(song) do |f| %>
   <% if song.errors.any? %>
     <div id="error_explanation">
@@ -12,13 +14,18 @@
   <% end %>
 <div class="form-group">
     <%= f.label :track ,:class => 'form-field'%>
-    <%= f.text_field :track, :readonly => true ,:class => 'form-control'%>
+    <%= f.text_field :track, :readonly => true ,:class => 'form-control', :size => '50x10'%>
     <%= f.label :album ,:class => 'form-field'%>
     <%= f.text_field :album, :class => 'form-control'%>
     <%= f.label :artists ,:class => 'form-field'%>
     <%= f.text_field :artists, :class => 'form-control'%>
     <%= f.hidden_field :uri %>
     <%= f.hidden_field :url %>
-    <%= f.submit :submit, class: 'btn btn-success'%>
+	<br>
+	<br>
+    <%= f.submit :submit, class: 'btn btn-success btn-lg'%>
+	</center>
+<center><%= link_to 'Back', search_path(@song) , :class => "btn btn-default btn-lg" %></center>
 </div>
 <% end %>
+</div>

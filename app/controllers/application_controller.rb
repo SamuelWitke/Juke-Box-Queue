@@ -6,6 +6,25 @@ class ApplicationController < ActionController::Base
   helper_method :mobile_device?
 
   protected
+  def get_current
+	if(Rails.application.config.client.status == nil)
+		flash[:error] = 'Spotify App Not Connected'
+		return
+	end
+	if(Rails.application.config.client.status['playing'])
+		track =  Rails.application.config.client.status['track']['track_resource']['name']
+		track = Song.find_by_track(track)
+		track = {
+				id: track.id,
+				track: track.track,
+				artists: track.artists,
+				url: track.url,
+				username: track.user.username
+		}
+		track
+	end
+  end
+
   def check_for_mobile
     session[:mobile_override] = params[:mobile] if params[:mobile]
 	prepare_for_mobile if mobile_device?
