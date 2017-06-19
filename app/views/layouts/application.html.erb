@@ -2,9 +2,14 @@
 <html>
 		<head>
 				<title>Juke Box</title>
-				<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+				<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
 				<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 				<%= csrf_meta_tags %>
+		<% unless @current.nil? %>	<meta http-equiv="refresh" content="<%=@current[:length]%>"/>
+			<% else %>
+				<meta http-equiv="refresh" content="20" /> 
+			<% end %>
+
 			<% if mobile_device? %>
 			<style>
 				.nav a{
@@ -39,9 +44,9 @@
 						<% flash.each do |name, msg| %>
 								<%= content_tag(:div, msg, class: "alert alert-info") %>
 						<% end %>
-						<div id="content" class="col-md-9 center-block">
+						<!-- div id="content" class="col-md-9 center-block" -->
 								<%= yield %>
-						</div>
+						<!--/div-->
 				</div>
 				</div>
 		</body>

@@ -1,5 +1,10 @@
 <%= javascript_include_tag "index_player/TweenMax.min.js" ,"data-turbolinks-track" => true %>
 <%= javascript_include_tag "index_player/player.js" ,"data-turbolinks-track" => true %>
+<style>
+ body {
+	background: #333333 !important;
+ }
+ </style>
 <% unless @current.nil? %>
 		<div class="player">
 				<div class="player-info">
@@ -66,16 +71,16 @@
 								<%= song.track %><br>
 								<%= song.artists %><br>
 								<%= image_tag(song.url) %><br>
-								<small class="author">Submitted <%= time_ago_in_words(song.created_at) %> by <%= song.user.username %></small>
-						</h2>
+								<small class="author">Submitted <%= time_ago_in_words(song.created_at) %> by <%= song.user.username %></small></br>
 						<div class="btn-group">
+							<span class="btn btn-default btn-lg"> <%= song.get_upvotes.size %></span>
 								<%= link_to like_song_path(song), method: :put, class: "btn btn-default btn-lg" do %>
-										<span class="glyphicon glyphicon-chevron-up"></span> Upvote
-										<%= song.get_upvotes.size %>
+										<span class="glyphicon glyphicon-chevron-up"></span> Up
+										<%#= song.votes_for.size %>
 								<% end %>
 								<%= link_to dislike_song_path(song), method: :put, class: "btn btn-default btn-lg" do %>
-										<span class="glyphicon glyphicon-chevron-down"> Downvote
-												<%= song.get_downvotes.size %>
+										<span class="glyphicon glyphicon-chevron-down"></span> Down
+												<%#= song.get_downvotes.size %>
 										<% end %>
 										<%= link_to "Show",song, class: "btn btn-default btn-lg" %>
 										<% if song.user == current_user %>
@@ -91,4 +96,4 @@ $("#play-pause").click(function(){
 		window.play();
 });
 </script>
-
+</div>

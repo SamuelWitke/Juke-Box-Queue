@@ -10,7 +10,7 @@ class Player
 		#	sleep 0
 			
 	#	end
-		puts Rails.application.config.client.status.inspect
+		#puts Rails.application.config.client.status.to_json
 		sleep Rails.application.config.client.status['track']['length'] #Prevent Busy Waiting by Sleeping
     end
   end

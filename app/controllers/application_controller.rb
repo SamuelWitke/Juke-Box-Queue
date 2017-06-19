@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :mobile_device?
 
   protected
+# Get current song playing to display in /index
   def get_current
 	if(Rails.application.config.client.status == nil)
 		flash[:error] = 'Spotify App Not Connected'
@@ -13,13 +14,15 @@ class ApplicationController < ActionController::Base
 	end
 	if(Rails.application.config.client.status['playing'])
 		track =  Rails.application.config.client.status['track']['track_resource']['name']
+		length = Rails.application.config.client.status['track']['length'] 
 		track = Song.find_by_track(track)
 		track = {
 				id: track.id,
 				track: track.track,
 				artists: track.artists,
 				url: track.url,
-				username: track.user.username
+				username: track.user.username,
+				length: length
 		}
 		track
 	end

@@ -1,5 +1,6 @@
 
 <%= javascript_include_tag "search/modernizr.custom.js" ,"data-turbolinks-track" => true %>
+<div id="content" class="col-sm-10 center-block">
 <h1> Search</h1>
 <%= form_tag(search_path, :method => "get", id: "search-form") do %>
 		<div class="input-group">
@@ -8,8 +9,8 @@
 						<%= select_tag "search_opt",options_for_select(["Track","Album","Artist"],selected: 'Track'), class: 'form-control', style: "width:auto"%>
 						<%= submit_tag "submit",class: "btn btn-danger",  'data-disable-with' => "Please wait.." %>
 				</span>
-		</div>
 <% end %>
+</div>
 <ul class="grid effect-8" id="grid">
 		<%case @search_opt %>
 		<%when 'Artist'%>

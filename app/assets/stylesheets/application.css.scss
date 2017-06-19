@@ -15,7 +15,9 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
+.container{
+    overflow:hidden;
+}
 .btn-xlg {
     padding: 18px 28px;
     font-size: 35px; //change this to your desired size
