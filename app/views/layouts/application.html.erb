@@ -6,8 +6,6 @@
 				<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 				<%= csrf_meta_tags %>
 		<% unless @current.nil? %>	<meta http-equiv="refresh" content="<%=@current[:length]%>"/>
-			<% else %>
-				<meta http-equiv="refresh" content="20" /> 
 			<% end %>
 
 			<% if mobile_device? %>
