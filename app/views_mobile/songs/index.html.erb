@@ -1,10 +1,11 @@
+<div class="floating-button">
+	<%= link_to "+", search_path, class: "plus"%>
+</div>
 <style>
  body {
 	background: #333333 !important;
  }
  </style>
-
-<center>
 <% unless @current.nil? %>
 		<div class="player">
 				<div class="player-info">
@@ -26,6 +27,7 @@
 <br>
 <br>
 <br>
+<center>
 <% @songs.each do |song| %>
 		<div class="song row clearfix">
 				<h2>
@@ -34,7 +36,7 @@
 						<%= image_tag(song.url, width: '760') %><br>
 						<small class="author">Submitted <%= time_ago_in_words(song.created_at) %> by <%= song.user.username %></small>
 				</h2>
-				<div class="btn-group">
+				<div class="btn-group btn-group-xlg">
 						<span class="btn btn-default btn-xlg"> <%= song.get_upvotes.size %></span>
 						<%= link_to like_song_path(song), method: :put, class: "btn btn-default btn-xlg" do %>
 								<span class="glyphicon glyphicon-chevron-up"></span> Upvote
@@ -45,7 +47,7 @@
 										<%#= song.get_downvotes.size %>
 								<% end %>
 								<% if song.user == current_user %>
-										<%= link_to 'Destroy', song, method: :delete, data: { confirm:'Are you sure?' } , class: "btn btn-default btn-xlg"%>
+										<%= link_to 'Delete', song, method: :delete, data: { confirm:'Are you sure?' } , class: "btn btn-default btn-xlg"%>
 								<% end %>
 
 				</div>
@@ -57,4 +59,3 @@ $("#play-pause").click(function(){
 		window.play();
 });
 </script>
-

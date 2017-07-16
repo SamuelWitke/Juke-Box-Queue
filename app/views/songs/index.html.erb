@@ -1,6 +1,8 @@
 <%= javascript_include_tag "index_player/TweenMax.min.js" ,"data-turbolinks-track" => true %>
 <%= javascript_include_tag "index_player/player.js" ,"data-turbolinks-track" => true %>
+
 <style>
+html {overflow: -moz-scrollbars-none;}
  body {
 	background: #333333 !important;
  }
@@ -73,18 +75,18 @@
 								<%= image_tag(song.url) %><br>
 								<small class="author">Submitted <%= time_ago_in_words(song.created_at) %> by <%= song.user.username %></small></br>
 						<div class="btn-group">
-							<span class="btn btn-default btn-lg"> <%= song.get_upvotes.size %></span>
-								<%= link_to like_song_path(song), method: :put, class: "btn btn-default btn-lg" do %>
+							<span class="btn btn-default btn-clg"> <%= song.get_upvotes.size %></span>
+								<%= link_to like_song_path(song), method: :put, class: "btn btn-default btn-clg" do %>
 										<span class="glyphicon glyphicon-chevron-up"></span> Up
 										<%#= song.votes_for.size %>
 								<% end %>
-								<%= link_to dislike_song_path(song), method: :put, class: "btn btn-default btn-lg" do %>
+								<%= link_to dislike_song_path(song), method: :put, class: "btn btn-default btn-clg" do %>
 										<span class="glyphicon glyphicon-chevron-down"></span> Down
 												<%#= song.get_downvotes.size %>
 										<% end %>
-										<%= link_to "Show",song, class: "btn btn-default btn-lg" %>
+										<%#= link_to "Show",song, class: "btn btn-default btn-lg" %>
 										<% if song.user == current_user %>
-												<%= link_to 'Destroy', song, method: :delete, data: { confirm:'Are you sure?' } , class: "btn btn-default btn-lg"%>
+												<%= link_to 'Delete', song, method: :delete, data: { confirm:'Are you sure?' } , class: "btn btn-default btn-clg"%>
 										<% end %>
 
 						</div>

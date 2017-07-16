@@ -11,6 +11,7 @@
 				</span>
 <% end %>
 </div>
+<div id ="ImagesGrid">
 <ul class="grid effect-8" id="grid">
 		<%case @search_opt %>
 		<%when 'Artist'%>
@@ -20,7 +21,12 @@
 						</li>
 						<% res.top_tracks(:US).each do |track| %>
 								<li>
-										<%= link_to image_tag(track.album.images.first["url"], size: "350" ),new_song_path(:track => track.name, :album => track.album.name, :artists => @search_res.first.name, :uri => track.uri) %> 
+										<%= link_to image_tag(track.album.images.first["url"], size: "350" ),
+										new_song_path(:track => track.name, 
+													  :album => track.album.name, 
+													  :artists => @search_res.first.name, 
+													  :uri => track.uri,
+													  :url => track.album.images.first["url"]) %> 
 										<h3> <%= track.name%> </h3>
 								</li>
 						<% end %>
@@ -32,7 +38,12 @@
 						</li>
 						<% res.tracks.each do |track| %>
 								<li>
-										<%= link_to image_tag(track.album.images.first["url"], size: "350" ),new_song_path(:track => track.name, :album => track.album.name, :artists => @search_res.first.name, :uri => track.uri) %> 
+										<%= link_to image_tag(track.album.images.first["url"], size: "350" ),
+										new_song_path(:track => track.name, 
+													  :album => track.album.name, 
+													  :artists => @search_res.first.name, 
+													  :uri => track.uri,
+													  :url => track.album.images.first["url"]) %> 
 										<h3> <%= track.name%> </h3>
 								</li>
 						<% end %>
@@ -40,22 +51,34 @@
 		<%when 'Track'%>
 				<% @search_res.each do |track| %>
 						<li>
-								<%= link_to image_tag(track.album.images.first["url"], size: "400" ),new_song_path(:track => track.name, :album => track.album.name, :artists => @search_res.first.name, :uri => track.uri, :url => track.album.images.first["url"]) %> 
+								<%= link_to image_tag(track.album.images.first["url"], size: "400" ),
+									new_song_path(:track => track.name, 
+												  :album => track.album.name, 
+												  :artists => @search_res.first.name, 
+												  :uri => track.uri, 
+												  :url => track.album.images.first["url"]) %> 
 								<h2><%= track.name%></h2> 
 						</li>
 				<% end %>
 		<% end %>
 </ul>
+</div>
 <p class="info">Based on the <a href="https://tympanus.net/Development/GridLoadingEffects/">Loading Effects for Grid Items</a> by Erika Mackley</p>
 <%= javascript_include_tag "search/masonry.pkgd.min.js" ,"data-turbolinks-track" => true %>
 <%= javascript_include_tag "search/imagesloaded.js" ,"data-turbolinks-track" => true %>
 <%= javascript_include_tag "search/classie.js" ,"data-turbolinks-track" => true %>
 <%= javascript_include_tag "search/AnimOnScroll.js" ,"data-turbolinks-track" => true %>
 <script>
-console.log("Loaded text/java");
+$("#ImagesGrid").hide();
 new AnimOnScroll( document.getElementById( 'grid' ), {
 		minDuration : 0.4,
 		maxDuration : 0.6,
 		viewportFactor : 0.2
 } );
+$('#container').imagesLoaded( function() {
+	console.log("ImagesLoaded");
+	$("#ImagesGrid").show();
+});
+
 </script>
+

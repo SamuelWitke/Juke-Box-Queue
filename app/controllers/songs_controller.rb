@@ -10,8 +10,12 @@ class SongsController < ApplicationController
   # GET /songs.json
   def index
 	@songs = []
-	@current = get_current
-	@songs = Song.where.not(id: @current[:id]).order(:cached_votes_up  => :desc)  unless @current.nil?
+	@current = get_current  
+	if @current.nil?
+		@songs = Song.order(:cached_votes_up  => :desc)
+	else	
+		@songs = Song.where.not(id: @current[:id]).order(:cached_votes_up  => :desc)
+	end
   end
 
   # GET /songs/1
@@ -67,8 +71,7 @@ class SongsController < ApplicationController
     @song = current_user.songs.build(song_params)
 	respond_to do |format|
     if @song.save
-  	   format.html { redirect_to @song, notice: 'Song was successfully created.'+@song.job_id.inspect }
-       format.json { render :show, status: :created, location: @song }
+  	   format.html { redirect_to root_path, notice: @song.track+" successfully added."}
     else
        format.html { render :new }
        format.json { render json: @song.errors, status: :unprocessable_entity }
@@ -78,6 +81,7 @@ class SongsController < ApplicationController
 
   # PATCH/PUT /songs/1
   # PATCH/PUT /songs/1.json
+=begin
   def update
     respond_to do |format|
       if @song.update(song_params)
@@ -89,6 +93,7 @@ class SongsController < ApplicationController
       end
     end
   end
+=end
 
   # DELETE /songs/1
   # DELETE /songs/1.json

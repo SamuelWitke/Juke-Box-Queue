@@ -24,7 +24,7 @@
 										<nav class="collapse navbar-collapse navbar-ex1-collapse">
 												<% if user_signed_in? %>
 														<ul class="nav navbar-nav navbar-right">
-																<li><%= link_to 'Submit Song', search_path %></li>
+																<% if !mobile_device?%> <li><%= link_to 'Submit Song', search_path %></li> <% end %>
 																<li><%= link_to 'Account', edit_user_registration_path %></li>
 																<li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
 														</ul>
@@ -38,14 +38,14 @@
 								</div>
 						</div>
 				</header>
-				<div id="main_content" class="container">
+				<div id="main_content" class="container"> 
 						<% flash.each do |name, msg| %>
 								<%= content_tag(:div, msg, class: "alert alert-info") %>
 						<% end %>
 						<!-- div id="content" class="col-md-9 center-block" -->
 								<%= yield %>
 						<!--/div-->
-				</div>
+					</div>
 				</div>
 		</body>
 </html>
