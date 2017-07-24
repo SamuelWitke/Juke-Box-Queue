@@ -24,7 +24,7 @@
 										<%= link_to image_tag(track.album.images.first["url"], size: "350" ),
 										new_song_path(:track => track.name, 
 													  :album => track.album.name, 
-													  :artists => @search_res.first.name, 
+												  	  :artists => track.artists.first.name, 
 													  :uri => track.uri,
 													  :url => track.album.images.first["url"]) %> 
 										<h3> <%= track.name%> </h3>
@@ -41,7 +41,7 @@
 										<%= link_to image_tag(track.album.images.first["url"], size: "350" ),
 										new_song_path(:track => track.name, 
 													  :album => track.album.name, 
-													  :artists => @search_res.first.name, 
+												  	  :artists => track.artists.first.name, 
 													  :uri => track.uri,
 													  :url => track.album.images.first["url"]) %> 
 										<h3> <%= track.name%> </h3>
@@ -54,7 +54,7 @@
 								<%= link_to image_tag(track.album.images.first["url"], size: "400" ),
 									new_song_path(:track => track.name, 
 												  :album => track.album.name, 
-												  :artists => @search_res.first.name, 
+												  :artists => track.artists.first.name, 
 												  :uri => track.uri, 
 												  :url => track.album.images.first["url"]) %> 
 								<h2><%= track.name%></h2> 

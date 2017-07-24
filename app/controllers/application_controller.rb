@@ -24,7 +24,9 @@ class ApplicationController < ActionController::Base
 				username: track.user.username,
 				length: length
 		}
-		track
+		return track
+	else
+		return  Song.new()
 	end
   end
 

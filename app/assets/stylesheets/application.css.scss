@@ -15,6 +15,7 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
 .container{
     overflow:hidden;
 }
@@ -62,8 +63,8 @@
 
 
 .floating-button{
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background: #db4437;
   position: fixed;
@@ -94,5 +95,6 @@
   animation: plus-out 0.3s;
   transition: all 0.3s;
 }
+
 
 

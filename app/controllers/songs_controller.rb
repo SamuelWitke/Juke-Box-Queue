@@ -8,14 +8,18 @@ class SongsController < ApplicationController
 
   # GET /songs
   # GET /songs.json
+  def get_songs
+	if @current.nil?
+		return Song.order(:cached_votes_up  => :desc)
+	else	
+		return Song.where.not(id: @current[:id]).order(:cached_votes_up  => :desc)
+	end
+  end
+
   def index
 	@songs = []
 	@current = get_current  
-	if @current.nil?
-		@songs = Song.order(:cached_votes_up  => :desc)
-	else	
-		@songs = Song.where.not(id: @current[:id]).order(:cached_votes_up  => :desc)
-	end
+	@songs = get_songs
   end
 
   # GET /songs/1
@@ -31,6 +35,8 @@ class SongsController < ApplicationController
 			:artists => params[:artists], 
 			:uri => params[:uri], 
 			:url => params[:url])
+	@current = get_current  
+	@songs = get_songs
   end
 
   # GET /songs/1/edit
