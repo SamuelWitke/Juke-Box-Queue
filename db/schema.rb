@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170620162527) do
+ActiveRecord::Schema.define(version: 20170805195942) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -31,24 +31,23 @@ ActiveRecord::Schema.define(version: 20170620162527) do
     t.string   "track"
     t.string   "album"
     t.string   "artists"
+    t.string   "uri"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-    t.integer  "user_id"
     t.integer  "cached_votes_total", default: 0
     t.integer  "cached_votes_score", default: 0
     t.integer  "cached_votes_up",    default: 0
     t.integer  "cached_votes_down",  default: 0
-    t.string   "uri"
     t.string   "url"
     t.integer  "delayed_jobs_id"
     t.integer  "job_id"
+    t.integer  "user_id"
     t.index ["cached_votes_down"], name: "index_songs_on_cached_votes_down"
     t.index ["cached_votes_score"], name: "index_songs_on_cached_votes_score"
     t.index ["cached_votes_total"], name: "index_songs_on_cached_votes_total"
     t.index ["cached_votes_up"], name: "index_songs_on_cached_votes_up"
     t.index ["delayed_jobs_id"], name: "index_songs_on_delayed_jobs_id"
     t.index ["job_id"], name: "index_songs_on_job_id"
-    t.index ["user_id"], name: "index_songs_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
